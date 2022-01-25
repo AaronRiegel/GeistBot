@@ -6,7 +6,7 @@ A discord bot I'm working on.
 
 ### How to use
 
-A the current moment you will need to setup your own discord api access
+At the current moment you will need to setup your own discord api access
 
 * https://discord.com/developers/applications
 * https://discord.js.org/#/
