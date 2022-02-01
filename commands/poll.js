@@ -1,6 +1,8 @@
 const {MessageActionRow, MessageButton} = require("discord.js");
 const {SlashCommandBuilder} = require("@discordjs/builders");
 const Polls = require("../shared/Polls");
+const { customAlphabet } = require('nanoid');
+const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 6);
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,7 +16,7 @@ module.exports = {
         const title = interaction.options.getString('title') ?? "Poll";
         const duration = parseInt(interaction.options.getString('duration') ?? "900000");
 
-        let categories = new Set(input);
+        let categories = new Set(input.map(c => c.trim()));
 
         if (categories?.size > 5) {
             await interaction.reply({content: `${interaction.user}, polls cannot exceed five categories`});
@@ -29,7 +31,6 @@ module.exports = {
             let savedCategories = [];
 
             categories.forEach(category => {
-                category.trim();
                 buttonRow.addComponents(
                     new MessageButton()
                         .setCustomId(`${category}`)
@@ -37,22 +38,21 @@ module.exports = {
                         .setStyle(`PRIMARY`),
                 );
 
-                savedCategories.push({name: category, value: 0});
+                savedCategories.push({name: category, value: 0, customId: nanoid()});
             });
 
             interaction.reply({content: `**${title}**`, components: [buttonRow], fetchReply: true, success: true})
                 .then(e => Polls.add({
                     messageId: e.id,
                     title: title,
+                    customId: nanoid(),
                     categories: savedCategories,
                     duration: duration,
                     active: true,
-                    voters: [
-
-                    ]
+                    voters: []
                 }));
 
-
+            setTimeout(Polls.dump, 10000);
         }
     }
 }

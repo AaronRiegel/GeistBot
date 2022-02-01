@@ -4,7 +4,7 @@ const {MessageActionRow, MessageButton} = require("discord.js");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('ping')
-        .setDescription('Replies with Pong!')
+        .setDescription('[PLACEHOLDER_COMMAND]')
         .addStringOption(option => option.setName('input').setDescription('Enter a string'))
         .addIntegerOption(option => option.setName('int').setDescription('Enter an integer'))
         .addNumberOption(option => option.setName('num').setDescription('Enter a number'))

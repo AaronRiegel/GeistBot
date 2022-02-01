@@ -1,6 +1,8 @@
 const dotenv = require('dotenv');
 const fs = require('fs');
 const {Client, Collection, Intents} = require('discord.js');
+const Polls = require("./shared/Polls");
+
 
 dotenv.config();
 
@@ -41,6 +43,7 @@ for (const file of eventFiles) {
     }
 }
 
+Polls.load();
 
 let token = process.env.TOKEN;
 
